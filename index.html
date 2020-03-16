@@ -21,7 +21,7 @@
     <script>
         // Variaveis do jogo
         var canvas, ctx, ALTURA, LARGURA, frames = 0, maxPulos = 3, velocidade = 6,
-            estadoAtual,
+            estadoAtual, record,
             estados = {
                 jogar: 0,
                 jogando: 1,
@@ -67,6 +67,10 @@
                 reset: function () {
                     this.velocidade = 0;
                     this.y = 0;
+                    if (this.score > record) {
+                        localStorage.setItem("record", this.score);
+                        record = this.score;
+                    }
                     this.score = 0;
                 },
                 desenha: function () {
@@ -164,6 +168,13 @@
             // Criar e repetir o box e chao
 
             estadoAtual = estados.jogar;
+
+            record = localStorage.getItem("record");
+
+            if (record == null) {
+                record = 0;
+            }
+
             roda()
         }
         function atualiza() {
